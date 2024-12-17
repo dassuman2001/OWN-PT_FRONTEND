@@ -9,6 +9,9 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false); // Toggle for dark mode
   const [isLoading, setIsLoading] = useState(false); // Loading spinner for API calls
 
+  // Fetch the API URL from environment variables
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
   const handleSendMessage = async (message) => {
     if (message.trim() === "") return; // Prevent empty messages
 
@@ -17,8 +20,7 @@ const App = () => {
     setIsLoading(true); // Show spinner during API call
 
     try {
-      // Proxy ensures no CORS issues
-      const response = await fetch("/chat", {
+      const response = await fetch(`${API_URL}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }), // Flask API expects "message" key
